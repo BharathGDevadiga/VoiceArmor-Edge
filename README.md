@@ -22,15 +22,15 @@ The project pairs with the **Arduino® UNO Q** over USB as an out-of-band hardwa
 
 ```mermaid
 graph TD
-    A[Incoming Call Audio Stream] -->|16 kHz Mono Buffer| B[Audio DSP Pipeline]
-    B -->|25ms Hanning Window + 10ms Hop| C[STFT & 64-Band Log-Mel Spectrogram]
-    C -->|Float32 Tensor [1, 1, 64, 96]| D[ONNX Runtime with QNN Plugin]
-    D -->|Delegated via QnnHtp.dll| E[Qualcomm Hexagon NPU - INT8]
-    E -->|Spoof Probability > 0.85| F{Threat Decision Engine}
-    F -->|Alert Trigger| G[Windows Toast Notification]
-    F -->|Serial Byte 0xA1| H[Arduino UNO Q Hardware Alert]
-    H --> I[Physical Red LED & Buzzer]
-    H --> J[Hardware Audio Disconnect Relay]
+    A["Incoming Call Audio Stream"] -->|"16 kHz Mono Buffer"| B["Audio DSP Pipeline"]
+    B -->|"25ms Hanning Window + 10ms Hop"| C["STFT & 64-Band Log-Mel Spectrogram"]
+    C -->|"Float32 Tensor (1, 1, 64, 96)"| D["ONNX Runtime with QNN Plugin"]
+    D -->|"Delegated via QnnHtp.dll"| E["Qualcomm Hexagon NPU (INT8)"]
+    E -->|"Spoof Probability > 0.85"| F{"Threat Decision Engine"}
+    F -->|"Alert Trigger"| G["Windows Toast Notification"]
+    F -->|"Serial Byte 0xA1"| H["Arduino UNO Q Hardware Alert"]
+    H --> I["Physical Red LED & Buzzer"]
+    H --> J["Hardware Audio Disconnect Relay"]
 ```
 
 ---
@@ -117,7 +117,7 @@ print("Hexagon NPU Latency:", profile_job.download_profile()["execution_summary"
    - Eliminates cloud dependency and honors strict data privacy standards.
 3. **Deployment & Accessibility**:
    - Packaged as a clean Windows background tray service for HP OmniBook PCs.
-   - Consumes $<120\text{ MB}$ RAM and operates 100% offline in Airplane Mode.
+   - Consumes under 120 MB RAM and operates 100% offline in Airplane Mode.
 4. **Presentation & Documentation**:
    - Includes full 10-slide pitch deck (`.pptx` and `.pdf`), detailed proposal document, and complete source code.
 
