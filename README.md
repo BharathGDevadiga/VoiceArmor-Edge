@@ -47,6 +47,9 @@ VoiceArmor-Edge/
 ├── README.md
 ├── requirements.txt
 ├── LICENSE
+├── .github/
+│   └── workflows/
+│       └── ci.yml                # GitHub Actions CI (flake8 + pytest)
 ├── src/
 │   ├── voicearmor_dsp.py       # Audio capture, STFT, and Log-Mel Spectrogram extraction
 │   ├── qnn_inference.py        # ONNX Runtime QNN Execution Provider (Hexagon NPU)
@@ -54,6 +57,8 @@ VoiceArmor-Edge/
 │   └── main.py                 # Integrated real-time background detection service
 ├── arduino/
 │   └── voicearmor_alert.ino    # Arduino sketch for LED, buzzer, and relay control
+├── tests/
+│   └── test_voicearmor.py      # Unit tests (DSP, inference, Arduino bridge)
 └── submission_assets/
     ├── VoiceArmor_Edge_Proposal.pdf
     ├── VoiceArmor_Edge_Pitch.pdf
@@ -83,6 +88,13 @@ python src/main.py --device npu --threshold 0.85
 ```bash
 python src/main.py --device cpu
 ```
+
+### 3. Run Tests
+```bash
+python -m pytest tests/ -v
+```
+
+> **Note:** If the model weights file (`models/voicearmor_quantized.onnx`) is not present, the inference engine automatically runs in **mock simulation mode** using a frequency-ratio heuristic. This is expected during development. To use real NPU inference, compile your model using the Qualcomm AI Hub workflow below and place the output file at `models/voicearmor_quantized.onnx`.
 
 ---
 

@@ -11,6 +11,8 @@ const int PIN_AUDIO_RELAY = 11; // Normally closed relay for headset circuit
 const byte CMD_ALERT_TRIGGER = 0xA1;
 const byte CMD_ALERT_CLEAR   = 0xA0;
 
+bool alertActive = false;
+
 void setup() {
   Serial.begin(115200);
   
@@ -27,10 +29,12 @@ void loop() {
   if (Serial.available() > 0) {
     byte command = Serial.read();
     
-    if (command == CMD_ALERT_TRIGGER) {
+    if (command == CMD_ALERT_TRIGGER && !alertActive) {
       setAlertState();
-    } else if (command == CMD_ALERT_CLEAR) {
+      alertActive = true;
+    } else if (command == CMD_ALERT_CLEAR && alertActive) {
       setSafeState();
+      alertActive = false;
     }
   }
 }

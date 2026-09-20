@@ -5,7 +5,12 @@ Simulates or runs live continuous call monitoring with on-device NPU inference.
 
 import time
 import argparse
+import sys
+import os
 import numpy as np
+
+# Ensure imports work when running from any directory (e.g. python src/main.py)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from voicearmor_dsp import AudioDSPPipeline
 from qnn_inference import VoiceArmorInferenceEngine
