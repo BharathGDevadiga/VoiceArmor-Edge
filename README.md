@@ -2,6 +2,11 @@
 > **Designed & Optimized for Snapdragon®-Powered HP PCs (Hexagon™ NPU) + Arduino® UNO Q**  
 > *Snapdragon® AI Lab Build & Present Challenge 2026*
 
+[![CI / Code Verification](https://github.com/BharathGDevadiga/VoiceArmor-Edge/actions/workflows/ci.yml/badge.svg)](https://github.com/BharathGDevadiga/VoiceArmor-Edge/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Target: Snapdragon X](https://img.shields.io/badge/Target-Snapdragon%20X%20Elite-E10600.svg)](https://www.qualcomm.com/snapdragon/ai-lab)
+[![Hardware: Hexagon NPU](https://img.shields.io/badge/Hardware-Hexagon%20NPU-blue.svg)](https://aihub.qualcomm.com/)
+
 ---
 
 ## 📌 Overview
