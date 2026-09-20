@@ -82,7 +82,9 @@ python src/main.py --device cpu
 
 ### 3. Run Tests
 ```bash
-python -m pytest tests/ -v
+python -m unittest discover -s tests -v
+# or if you have pytest installed:
+pytest tests/ -v
 ```
 
 > **Note:** If the model weights file (`models/voicearmor_quantized.onnx`) is not present, the inference engine automatically runs in **mock simulation mode** using a frequency-ratio heuristic. This is expected during development. To use real NPU inference, compile your model using the Qualcomm AI Hub workflow below and place the output file at `models/voicearmor_quantized.onnx`.
