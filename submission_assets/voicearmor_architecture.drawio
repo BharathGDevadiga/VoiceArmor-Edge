@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net" modified="2026-09-20T12:00:00.000Z" agent="Antigravity" version="21.0.0" type="device">
+  <diagram name="VoiceArmor-Edge Architecture" id="voicearmor-arch">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- PC CONTAINER -->
+        <mxCell id="box_pc" value="Snapdragon®-Powered HP PC (On-Device Edge Processing)" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=13;fontStyle=1;fillColor=#F4F7FC;strokeColor=#1954A6;strokeWidth=2;arcSize=8;rounded=1;collapsible=0;startSize=32;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="700" height="380" as="geometry" />
+        </mxCell>
+        
+        <!-- ARDUINO CONTAINER -->
+        <mxCell id="box_arduino" value="Arduino® UNO Q (Hardware Safety Module)" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=13;fontStyle=1;fillColor=#FFF8F0;strokeColor=#D96B27;strokeWidth=2;arcSize=8;rounded=1;collapsible=0;startSize=32;align=left;spacingLeft=12;" vertex="1" parent="1">
+          <mxGeometry x="780" y="40" width="340" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- NODE 1: Audio Input -->
+        <mxCell id="node_audio" value="&lt;b&gt;Incoming Call Audio&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px; color: #555555;&quot;&gt;Teams / Zoom / WhatsApp&lt;br&gt;16 kHz Mono Stream&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=11;fillColor=#FFFFFF;strokeColor=#1954A6;strokeWidth=1.5;shadow=1;" vertex="1" parent="box_pc">
+          <mxGeometry x="30" y="60" width="180" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- NODE 2: Audio DSP -->
+        <mxCell id="node_dsp" value="&lt;b&gt;Audio DSP Pipeline&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px; color: #555555;&quot;&gt;25ms Hanning + STFT&lt;br&gt;64-band Log-Mel Filterbank&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=11;fillColor=#EBF3FB;strokeColor=#1954A6;strokeWidth=1.5;shadow=1;" vertex="1" parent="box_pc">
+          <mxGeometry x="30" y="180" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- NODE 3: Hexagon NPU -->
+        <mxCell id="node_npu" value="&lt;b&gt;Qualcomm® Hexagon™ NPU&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px; color: #555555;&quot;&gt;INT8 Quantized CNN&lt;br&gt;ONNX Runtime + QnnHtp.dll&lt;br&gt;&lt;b style=&quot;color: #007700;&quot;&gt;Latency &amp;lt; 15 ms&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=11;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;shadow=1;" vertex="1" parent="box_pc">
+          <mxGeometry x="280" y="180" width="200" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- NODE 4: Decision Engine -->
+        <mxCell id="node_engine" value="&lt;b&gt;Threat Decision Engine&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px; color: #555555;&quot;&gt;Threshold Check (&amp;gt; 0.85)&lt;br&gt;Background Tray Service&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=11;fillColor=#FFFFFF;strokeColor=#1954A6;strokeWidth=1.5;shadow=1;" vertex="1" parent="box_pc">
+          <mxGeometry x="280" y="60" width="200" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- NODE 5: Toast Notification -->
+        <mxCell id="node_toast" value="&lt;b&gt;Windows Toast Alert&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px; color: #555555;&quot;&gt;On-screen Visual Banner&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=11;fillColor=#FFFDE7;strokeColor=#FBC02D;strokeWidth=1.5;shadow=1;" vertex="1" parent="box_pc">
+          <mxGeometry x="525" y="62.5" width="150" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- NODE 6: Arduino Bridge -->
+        <mxCell id="node_ard_bridge" value="&lt;b&gt;Arduino UNO Q Board&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px; color: #555555;&quot;&gt;USB-CDC Serial (115200 Baud)&lt;br&gt;State-Guarded Firmware&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=11;fillColor=#FFFFFF;strokeColor=#D96B27;strokeWidth=1.5;shadow=1;" vertex="1" parent="box_arduino">
+          <mxGeometry x="30" y="60" width="180" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- NODE 7: Red LED & Buzzer -->
+        <mxCell id="node_alert_hw" value="&lt;b&gt;Red Warning LED + Buzzer&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px; color: #555555;&quot;&gt;High-pitch 1kHz tone&lt;br&gt;Unmissable physical alert&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=11;fillColor=#FFEBEE;strokeColor=#C62828;strokeWidth=1.5;shadow=1;" vertex="1" parent="box_arduino">
+          <mxGeometry x="30" y="170" width="180" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- NODE 8: Audio Relay -->
+        <mxCell id="node_relay" value="&lt;b&gt;Hardware Disconnect Relay&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px; color: #555555;&quot;&gt;Normally-closed mic switch&lt;br&gt;Out-of-band call isolation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Segoe UI;fontSize=11;fillColor=#FFEBEE;strokeColor=#C62828;strokeWidth=1.5;shadow=1;" vertex="1" parent="box_arduino">
+          <mxGeometry x="30" y="270" width="180" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- EDGES INSIDE PC -->
+        <mxCell id="edge1" value="250ms Audio Chunk" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Segoe UI;fontSize=9;fontColor=#444444;strokeColor=#1954A6;strokeWidth=1.5;" edge="1" parent="box_pc" source="node_audio" target="node_dsp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge2" value="Float32 Tensor&#xa;[1, 1, 64, 96]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Segoe UI;fontSize=9;fontColor=#444444;strokeColor=#1954A6;strokeWidth=1.5;" edge="1" parent="box_pc" source="node_dsp" target="node_npu">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge3" value="Spoof Probability&#xa;(0.0 to 1.0)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Segoe UI;fontSize=9;fontColor=#444444;strokeColor=#2E7D32;strokeWidth=1.5;" edge="1" parent="box_pc" source="node_npu" target="node_engine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge4" value="Threat Flag" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Segoe UI;fontSize=9;fontColor=#444444;strokeColor=#1954A6;strokeWidth=1.5;" edge="1" parent="box_pc" source="node_engine" target="node_toast">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CROSS-BOX EDGE: PC to Arduino -->
+        <mxCell id="edge_serial" value="USB Serial (Byte 0xA1 Alert / 0xA0 Clear)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Segoe UI;fontSize=10;fontStyle=1;fontColor=#D96B27;strokeColor=#D96B27;strokeWidth=2;" edge="1" parent="1" source="node_engine" target="node_ard_bridge">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- EDGES INSIDE ARDUINO -->
+        <mxCell id="edge5" value="Digital Pin 8, 10" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Segoe UI;fontSize=9;fontColor=#444444;strokeColor=#D96B27;strokeWidth=1.5;" edge="1" parent="box_arduino" source="node_ard_bridge" target="node_alert_hw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge6" value="Digital Pin 11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Segoe UI;fontSize=9;fontColor=#444444;strokeColor=#D96B27;strokeWidth=1.5;" edge="1" parent="box_arduino" source="node_ard_bridge" target="node_relay">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
