@@ -25,25 +25,9 @@ The project pairs with the **Arduino® UNO Q** over USB as an out-of-band hardwa
 
 ## 🏗️ Architecture
 
-```mermaid
-flowchart LR
-    subgraph PC ["💻 Snapdragon®-Powered HP PC (On-Device Edge AI)"]
-        direction TB
-        A["Incoming Call Audio (16 kHz Mono)"] -->|"250ms Buffer"| B["Audio DSP Pipeline (STFT & 64 Mel Bands)"]
-        B -->|"Float32 Tensor [1, 1, 64, 96]"| C["Qualcomm® Hexagon™ NPU (INT8 via QnnHtp.dll)"]
-        C -->|"Spoof Probability > 0.85"| D{"Threat Decision Engine"}
-        D -->|"Visual Banner"| E["Windows Toast Alert"]
-    end
-
-    subgraph ARD ["🔌 Arduino® UNO Q (Hardware Safety Module)"]
-        direction TB
-        F["Arduino UNO Q Bridge (115200 Baud)"]
-        F --> G["🚨 Physical Red LED & Buzzer"]
-        F --> H["🛑 Microphone Disconnect Relay"]
-    end
-
-    D ==>|"USB Serial Byte 0xA1"| F
-```
+<p align="center">
+  <img src="submission_assets/voicearmor_architecture.png" alt="VoiceArmor-Edge End-to-End System Architecture" width="900">
+</p>
 
 ---
 
