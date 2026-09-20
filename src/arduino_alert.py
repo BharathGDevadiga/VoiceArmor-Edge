@@ -29,7 +29,7 @@ class ArduinoHardwareBridge:
             self.serial_conn = None
 
     def trigger_threat_alert(self):
-        """Sends hardware alert command to trigger LED, buzzer, and isolation relay."""
+        """Sends hardware alert command to trigger LED, buzzer and isolation relay."""
         if self.serial_conn and self.serial_conn.is_open:
             try:
                 self.serial_conn.write(ALERT_BYTE_TRIGGER)

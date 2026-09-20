@@ -11,7 +11,7 @@
 
 ## 📌 Overview
 
-**VoiceArmor-Edge** is an on-device acoustic security agent built for **Snapdragon-powered HP PCs**. It intercepts incoming call audio streams (from Microsoft Teams, Zoom, or WhatsApp Desktop) in 250ms sliding windows, performs high-speed spectral feature extraction, and classifies whether the speech is genuine human voice or a synthetic AI voice clone / vocoder exploit.
+**VoiceArmor-Edge** is an on-device acoustic security agent built for **Snapdragon-powered HP PCs**. It intercepts incoming call audio streams (from Microsoft Teams, Zoom or WhatsApp Desktop) in 250ms sliding windows, performs spectral feature extraction and classifies whether the speech is genuine human voice or a synthetic AI voice clone.
 
 Inference runs entirely on the **Qualcomm® Hexagon™ NPU** via the **ONNX Runtime QNN Execution Provider (`QnnHtp.dll`)**, ensuring:
 - **Sub-15ms inference latency**
@@ -19,7 +19,7 @@ Inference runs entirely on the **Qualcomm® Hexagon™ NPU** via the **ONNX Runt
 - **Zero CPU/GPU contention** during active video calls
 - **Full Airplane Mode functionality**
 
-The project pairs with the **Arduino® UNO Q** over USB as an out-of-band hardware alert indicator (driving a physical warning LED, buzzer, and hardware audio kill-switch).
+The project pairs with the **Arduino® UNO Q** over USB as an out-of-band hardware alert indicator (driving a physical warning LED, buzzer and hardware audio kill-switch).
 
 ---
 
@@ -51,12 +51,12 @@ VoiceArmor-Edge/
 │   └── workflows/
 │       └── ci.yml                # GitHub Actions CI (flake8 + pytest)
 ├── src/
-│   ├── voicearmor_dsp.py       # Audio capture, STFT, and Log-Mel Spectrogram extraction
+│   ├── voicearmor_dsp.py       # Audio capture, STFT and Log-Mel Spectrogram extraction
 │   ├── qnn_inference.py        # ONNX Runtime QNN Execution Provider (Hexagon NPU)
 │   ├── arduino_alert.py        # USB-CDC Serial bridge to Arduino UNO Q
 │   └── main.py                 # Integrated real-time background detection service
 ├── arduino/
-│   └── voicearmor_alert.ino    # Arduino sketch for LED, buzzer, and relay control
+│   └── voicearmor_alert.ino    # Arduino sketch for LED, buzzer and relay control
 ├── tests/
 │   └── test_voicearmor.py      # Unit tests (DSP, inference, Arduino bridge)
 └── submission_assets/
@@ -136,7 +136,7 @@ print("Hexagon NPU Latency:", profile_job.download_profile()["execution_summary"
    - Packaged as a clean Windows background tray service for HP OmniBook PCs.
    - Consumes under 120 MB RAM and operates 100% offline in Airplane Mode.
 4. **Presentation & Documentation**:
-   - Includes full 10-slide pitch deck (`.pptx` and `.pdf`), detailed proposal document, and complete source code.
+   - Includes full 10-slide pitch deck (`.pptx` and `.pdf`), detailed proposal document and complete source code.
 
 ---
 
