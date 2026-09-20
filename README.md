@@ -26,16 +26,23 @@ The project pairs with the **Arduino® UNO Q** over USB as an out-of-band hardwa
 ## 🏗️ Architecture
 
 ```mermaid
-graph TD
-    A["Incoming Call Audio Stream"] -->|"16 kHz Mono Buffer"| B["Audio DSP Pipeline"]
-    B -->|"25ms Hanning Window + 10ms Hop"| C["STFT & 64-Band Log-Mel Spectrogram"]
-    C -->|"Float32 Tensor (1, 1, 64, 96)"| D["ONNX Runtime with QNN Plugin"]
-    D -->|"Delegated via QnnHtp.dll"| E["Qualcomm Hexagon NPU (INT8)"]
-    E -->|"Spoof Probability > 0.85"| F{"Threat Decision Engine"}
-    F -->|"Alert Trigger"| G["Windows Toast Notification"]
-    F -->|"Serial Byte 0xA1"| H["Arduino UNO Q Hardware Alert"]
-    H --> I["Physical Red LED & Buzzer"]
-    H --> J["Hardware Audio Disconnect Relay"]
+flowchart LR
+    subgraph PC ["💻 Snapdragon®-Powered HP PC (On-Device Edge AI)"]
+        direction TB
+        A["Incoming Call Audio (16 kHz Mono)"] -->|"250ms Buffer"| B["Audio DSP Pipeline (STFT & 64 Mel Bands)"]
+        B -->|"Float32 Tensor [1, 1, 64, 96]"| C["Qualcomm® Hexagon™ NPU (INT8 via QnnHtp.dll)"]
+        C -->|"Spoof Probability > 0.85"| D{"Threat Decision Engine"}
+        D -->|"Visual Banner"| E["Windows Toast Alert"]
+    end
+
+    subgraph ARD ["🔌 Arduino® UNO Q (Hardware Safety Module)"]
+        direction TB
+        F["Arduino UNO Q Bridge (115200 Baud)"]
+        F --> G["🚨 Physical Red LED & Buzzer"]
+        F --> H["🛑 Microphone Disconnect Relay"]
+    end
+
+    D ==>|"USB Serial Byte 0xA1"| F
 ```
 
 ---
